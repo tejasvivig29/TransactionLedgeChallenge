@@ -23,11 +23,11 @@ export class ReportService {
       const csvRecords = [];
 
       for (const transaction of transactions) {
-        const payouts = await PayoutNotificationModel.find({ transactionId: transaction.transactionId });
+        const payouts = await PayoutNotificationModel.find({ transactionId: transaction._id });
 
         for (const payout of payouts) {
           const csvRecord = {
-            transactionId: transaction.transactionId,
+            transactionId: transaction._id,
             date: transaction.date,
             amount: transaction.amount,
             merchantId: transaction.merchantId,

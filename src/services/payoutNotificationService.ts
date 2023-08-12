@@ -10,7 +10,7 @@ export class PayoutNotificationService {
        const valPayout: PayoutNotification = {
         date: new Date(),
         partialAmount: transaction.amount - merchantAmount,
-        transactionId: transaction.transactionId,
+        transactionId: transaction._id,
         merchantId: transaction.merchantId,
         splitId: 'Fee Part1',
         destinationAccount: 'valpay'
@@ -21,7 +21,7 @@ export class PayoutNotificationService {
         const merchantPayout: PayoutNotification = {
             date: new Date(),
             partialAmount: merchantAmount,
-            transactionId: transaction.transactionId,
+            transactionId: transaction._id,
             merchantId: transaction.merchantId,
             splitId: 'Fee Part2',
             destinationAccount: 'merchant'

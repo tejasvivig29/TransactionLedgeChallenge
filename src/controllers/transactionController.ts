@@ -7,12 +7,10 @@ export class TransactionController{
     static async handleTransactionHook(req: Request, res: Response): Promise<void>{
         try{
            
-            const transactionData: TransactionNotification = req.body;
+           const transactionData: TransactionNotification = req.body;
 
-            if(transactionData.amount < 0 || !/^M\d+$/.test(transactionData.merchantId) || !/^T\d+$/.test(transactionData.transactionId) || !['AUTH', 'REFUND', 'DISPUTE'].includes(transactionData.transactionType)){
-                res.status(400).json({ message: "Received invalid data"});
-                return;
-            }
+           transactionData.date = new Date();
+           
         
             const savedTransaction = await TransactionService.saveTransaction(transactionData);
 

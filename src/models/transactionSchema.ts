@@ -5,7 +5,6 @@ const transactionSchema = new Schema<TransactionNotification>({
     date: Date,
     amount: Number,
     merchantId: String,
-    transactionId: String,
     transactionType: String,
 });
 
