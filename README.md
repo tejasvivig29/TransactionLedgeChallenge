@@ -100,3 +100,38 @@ Our backend code has two APIs
 ![Transaction Ledge System](https://github.com/tejasvivig29/TransactionLedgeChallenge/assets/38378458/243646ba-9694-44f1-a806-df1039caadd5)
 
 ## Architecture Diagram Explanation
+
+This note is an explanation of the architecture diagram that has been created keeping in mind the 
+requirements for cloud native solution for our application.
+
+Flow of the API requests from client.
+
+/webhook/transaction
+
+1. The client sends over a request with the transaction payload.
+2. The request is first received at Route 53 which is a Domain Name System(DNS) web service
+   which has a primary function to route incoming traffic to appropriate resources. It helps in translating 
+   domain names into IP addresses, which will be the case here.
+3. The request will then hit the Amazon CloudFront which hunder the hood ehances the performance. scalability and security
+   of the web applications. It can also help our application to be secured from DDoS attacks.
+4. The request will then hit the API Gateway which is highly available across multiple availability zones ensuring that APIs 
+   are available even in case of infrastructure failures. API Gateway can also provide authentication and authorization and also has seamless
+   integration with OAuth. API gateway basically helps us expose our API end points.
+5. The request API Gateway further routes the request to SNS topic. The SNS topic acts as a message broker that can give out 
+   messages to multiple subscribers.
+6. Now we have once or more SQS queues that are subscribed to SNS topic, when SNS receives the request from API gateway , it sends the 
+   request to the SQS queue. If there is any request that is not processed for a longer period of time or keeps failing it can end up being in a dead letter queue 
+   where we can analyze the request.
+7. The request is now forwarded to our first lambda function that has been deployed with the code to take care of the transaction even if it is REFUND, AUTH, DISPUTE
+   The transactions are added in the database.
+8. Once we receive the request for AUTH transaction type, automatically the lambda function for payout processing is triggered which manages the payout processing as explained
+   in the code explanation heading above and saves it to the database.
+
+
+/webhook/generateReport
+
+As of now generateReport is a separate API that is a get request to generate a report for the transactions and the payouts.
+
+Since we are planning on generating a report at the end of the day every day, we can consider creating a rule for an event bridge and deploying our code
+on AWS lambda function. Every end of the day we can trigger the lambda function to generate a report for all the transactions present in the database.
+The report can further be stored in the S3 bucket at the back end.
