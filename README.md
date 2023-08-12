@@ -11,7 +11,7 @@ This repository contains the backend for handling transactions and its payouts a
 - [Installation](#installation)
   - [Node](#Node)
 - [Backend](#running_backend)
-- [Code Explanation]
+- [Code Explanation](#code_explanation)
 - [Architecture Diagram](#architecture_diagram)
 - [Architecture Diagram Explanation](#architecture_diagram_Explanation)
 
