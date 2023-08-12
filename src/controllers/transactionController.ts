@@ -9,9 +9,28 @@ export class TransactionController{
            
            const transactionData: TransactionNotification = req.body;
 
+           if(transactionData.amount == null){
+            res.status(400).json({ message: "Invalid data received, amount is null"});
+            return;
+           }
+
+           if(transactionData.amount < 0){
+            res.status(400).json({ message: "Invalid data received, amount is negative"});
+            return;
+           }
+
+           if(transactionData.merchantId == null){
+            res.status(400).json({ message: "Invalid data received, merchant id is null"});
+            return;
+           }
+
+           if(transactionData.transactionType == null){
+            res.status(400).json({ message: "Invalid data received, transaction type is null"});
+            return;
+           }
+
            transactionData.date = new Date();
-           
-        
+
             const savedTransaction = await TransactionService.saveTransaction(transactionData);
 
             if (savedTransaction.transactionType === "AUTH")
