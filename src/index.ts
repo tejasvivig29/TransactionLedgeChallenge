@@ -1,6 +1,7 @@
 import * as express from 'express';
-import { Response } from 'express';
+//import { Response } from 'express';
 import * as dotenv from 'dotenv';
+import routes from './routes/routes';
 import { connectToDatabase } from './config/db';
 dotenv.config();
 
@@ -8,9 +9,9 @@ const app = express();
 
 connectToDatabase();
 
-app.get("/", (_, res: Response) => {
-  res.send("Hello World!");
-});
+app.use(express.json());
+
+app.use(routes);
 
 const PORT = process.env.PORT || 3000;
 
