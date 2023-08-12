@@ -16,6 +16,7 @@ This repository contains the backend for handling transactions and its payouts a
 - [Architecture Diagram Explanation](#architecture_diagram_Explanation)
 - [Testing Stratergies](#testing_stratergies)
 - [Deployment Stratergies](#deployment_stratergies)
+- [Production Monitoring Stratergies](#production_monitoring_stratergies)
 
 
 ## Installation
@@ -153,4 +154,8 @@ For deployment purposes, I can choose a CI/CD tool that gels well with AWS servi
 I can cofigure my CI/CD tool to create a build and deployment pipeline that can pull my source code from repository and package my
 lambda functions and other artifacts required for deployment. I can use AWS lambda's native integration with AWS pipeline 
 to deploy my lambda functions. I can use environment variables and parameterization to configure different environments like
-deployment, satging and production.
+deployment, satging and production. I can also add rollback statergies in case the deployment fails and also an optional approval mechanism to manually review and approve the deployment before it goes live.
+
+## Production Monitoring Stratergies
+
+I can use Amazon Cloudwatch for monitoring purposes. AWS Cloudwatch is a monitoring and observability service provided by AWS. It can help me collect data on lambda functions, errors, duration taken to execute, etc. I can also set alarms to trigger notifications for specific conditions like high error rates or longer execution times.
